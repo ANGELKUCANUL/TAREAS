@@ -1,0 +1,78 @@
+nav {
+    width: 1000px; /* Ancho deseado */
+    height: 100px; /* Altura deseada */
+    background-color: #92ff71; /* Color de fondo */
+    border: 5px solid #000; /* Borde color negro y de 1 píxel de grosor */
+
+}
+.cuadrado  {
+    width: 184px; /* Ancho de 150 píxeles */
+    height: 70px; /* Alto de 150 píxeles */
+    background: rgb(255, 255, 255); /* Fondo de color rojo */
+    border: 1px solid #000; /* Borde color negro y de 1 píxel de grosor */
+    position: absolute;
+    top: 20px;
+}
+header  {
+    width: 1000px; /* Ancho deseado */
+    height: 300px;
+    background-color: dodgerblue;
+    border: 5px solid #000; /* Borde color negro y de 1 píxel de grosor */
+
+}
+.rectangulo{
+    width: 800px;
+    height: 280px;
+    background-color: white;
+    position: absolute;
+    top: 130px;
+    left: 20px;
+}
+
+.login{
+    width: 160px;
+    height: 75px;
+    background-color: rgb(255, 255, 255);
+    position: absolute;
+    left: 835px;
+}
+
+main{
+    width: 1000px; /* Ancho deseado */
+    height: 500px;
+    background-color: rgb(82, 82, 82);
+    border: 5px solid #000; /* Borde color negro y de 1 píxel de grosor */
+
+}
+aside{
+    width: 200px; /* Ancho deseado */
+    height: 480px;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid #000; /* Borde color negro y de 1 píxel de grosor */
+
+    position: absolute;
+
+}
+article{
+    width: 500px; /* Ancho deseado */
+    height: 480px;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid #000; /* Borde color negro y de 1 píxel de grosor */
+    left: 260px;
+    position: absolute;
+}
+
+footer{
+    width: 1000px; /* Ancho deseado */
+    height: 50px;
+    background-color: rgb(212, 143, 31);
+    border: 5px solid #000; /* Borde color negro y de 1 píxel de grosor */
+
+}
+
+.texto {
+    text-align: center; /* Alineación del texto */
+    display: flex; /* Uso de flexbox para centrar */
+    justify-content: center; /* Centrar horizontalmente */
+    align-items: center; /* Centrar verticalmente */
+  }
