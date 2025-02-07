@@ -1,0 +1,90 @@
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
+#include <ESP32Servo.h>
+
+// Definición de pines
+#define RELAY_PIN 23       // Pin del relé para la bomba
+#define SENSOR_WATER 34    // Sensor de agua
+#define BUTTON 18          // Botón manual
+#define SERVO_PIN 4        // Servomotor
+#define LED_ROJO 5         // LED rojo (bomba apagada)
+#define LED_VERDE 2        // LED verde (bomba activada)
+
+LiquidCrystal_I2C lcd(0x27, 16, 2);  // Dirección I2C
+Servo servoMotor;
+
+void setup() {
+    Serial.begin(115200);
+    
+    pinMode(RELAY_PIN, OUTPUT);
+    pinMode(LED_ROJO, OUTPUT);
+    pinMode(LED_VERDE, OUTPUT);
+    pinMode(BUTTON, INPUT_PULLUP);
+    pinMode(SENSOR_WATER, INPUT);
+
+    servoMotor.attach(SERVO_PIN);
+    servoMotor.write(0); // Posición inicial
+
+    // Inicialización correcta de la pantalla LCD
+    lcd.begin(16, 2);
+    lcd.backlight();
+    lcd.setCursor(0, 0);
+    lcd.print("Sistema Iniciado");
+    delay(2000);
+    lcd.clear();
+    
+    Serial.println("Sistema iniciado.");
+}
+
+void loop() {
+    int humedad = analogRead(SENSOR_WATER);
+    Serial.print("Humedad: ");
+    Serial.println(humedad);
+
+    // Mostrar humedad en LCD
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("Humedad: ");
+    lcd.print(humedad);
+
+    if (humedad < 500) {
+        Serial.println("¡BOMBA ACTIVADA!");
+        digitalWrite(RELAY_PIN, HIGH);  // Activa la bomba
+        digitalWrite(LED_ROJO, LOW);    // Apaga LED rojo
+        digitalWrite(LED_VERDE, HIGH);  // Enciende LED verde
+
+        lcd.setCursor(0, 1);
+        lcd.print("BOMBA ACTIVADA!");
+
+        servoMotor.write(90);  // Abre la válvula
+        delay(3000);
+    } else {
+        Serial.println("Bomba apagada.");
+        digitalWrite(RELAY_PIN, LOW);   // Apaga la bomba
+        digitalWrite(LED_ROJO, HIGH);   // Enciende LED rojo
+        digitalWrite(LED_VERDE, LOW);   // Apaga LED verde
+
+        lcd.setCursor(0, 1);
+        lcd.print("BOMBA APAGADA");
+
+        servoMotor.write(0);  // Cierra la válvula
+    }
+
+    // Control manual con botón
+    if (digitalRead(BUTTON) == LOW) {
+        Serial.println("Botón presionado. Activando bomba manualmente.");
+        digitalWrite(RELAY_PIN, HIGH);
+        digitalWrite(LED_ROJO, LOW);
+        digitalWrite(LED_VERDE, HIGH);
+        lcd.setCursor(0, 1);
+        lcd.print("Modo Manual ON");
+        delay(5000);
+        digitalWrite(RELAY_PIN, LOW);
+        digitalWrite(LED_ROJO, HIGH);
+        digitalWrite(LED_VERDE, LOW);
+        lcd.setCursor(0, 1);
+        lcd.print("Modo Manual OFF");
+    }
+
+    delay(1000);
+}
